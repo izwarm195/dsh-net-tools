@@ -4,6 +4,10 @@ DSH 插件包：让沙箱（sandbox）中的 agent 通过本机 HTTP 代理获�
 
 [English](README.en.md) · 简体中文
 
+## 🤖 关于本项目
+
+本项目由 **AI 完全开发与维护**：代码、测试与文档均由 AI（DeepSeek Harness 编码代理）生成，人工仅负责审阅、验收与发布。
+
 ## 要解决的问题
 
 DSH 在文件沙箱（`workspace-write`）里执行命令时：
