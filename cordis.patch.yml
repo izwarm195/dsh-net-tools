@@ -1,0 +1,4 @@
+# dsh-net-tools profile patch: register the net tools bundle.
+- insert:
+    - id: net-tools
+      name: dsh-net-tools

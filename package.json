@@ -1,0 +1,36 @@
+{
+  "name": "dsh-net-tools",
+  "version": "0.1.0",
+  "description": "DSH bundle that gives sandboxed agents reliable outbound networking through the user's local proxy: net_fetch (CONNECT-tunnel HTTP fetch) and net_proxy_status (proxy diagnostics).",
+  "type": "module",
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "lib/*.js",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node --test test/"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": ">=4.0.0",
+    "@deepseek-ai/dsh-tools": ">=0.1.0-rc.5"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/izwarm195/dsh-net-tools.git"
+  }
+}
