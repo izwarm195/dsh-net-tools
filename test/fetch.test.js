@@ -1,6 +1,22 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
+import { connect } from 'node:net'
 import { netFetch, resolveProxy, assertPublicTarget, proxyStatus } from '../lib/fetch.js'
+
+const PROXY = 'http://127.0.0.1:7897'
+
+/** Whether a local proxy is listening on 127.0.0.1:7897 (CI runners don't have one). */
+function proxyAvailable() {
+  return new Promise((resolve) => {
+    const s = connect(7897, '127.0.0.1')
+    s.setTimeout(1500)
+    s.once('connect', () => { s.destroy(); resolve(true) })
+    s.once('error', () => resolve(false))
+    s.once('timeout', () => { s.destroy(); resolve(false) })
+  })
+}
+
+const PROXY_AVAILABLE = await proxyAvailable()
 
 test('resolveProxy reads HTTPS_PROXY env', () => {
   const p = resolveProxy(undefined, { HTTPS_PROXY: 'http://127.0.0.1:7897' })
@@ -27,9 +43,9 @@ test('assertPublicTarget rejects private addresses', () => {
   assert.ok(assertPublicTarget('http://127.0.0.1/x', true))
 })
 
-test('netFetch fetches over proxy when env proxy is set', { timeout: 30_000 }, async () => {
+test('netFetch fetches over proxy when env proxy is set', { timeout: 30_000, skip: !PROXY_AVAILABLE }, async () => {
   const r = await netFetch('https://www.gstatic.com/generate_204', {
-    proxy: 'http://127.0.0.1:7897',
+    proxy: PROXY,
     maxBytes: 4096,
     timeoutMs: 15_000,
   })
@@ -38,18 +54,18 @@ test('netFetch fetches over proxy when env proxy is set', { timeout: 30_000 }, a
   assert.equal(r.proxy, true)
 })
 
-test('netFetch follows redirects', { timeout: 30_000 }, async () => {
+test('netFetch follows redirects', { timeout: 30_000, skip: !PROXY_AVAILABLE }, async () => {
   const r = await netFetch(
     'https://github.com/anywhere-labs/deepseek-harness-desktop/raw/master/README.md',
-    { proxy: 'http://127.0.0.1:7897', maxBytes: 2000, timeoutMs: 15_000 },
+    { proxy: PROXY, maxBytes: 2000, timeoutMs: 15_000 },
   )
   assert.ok(r.redirects >= 1)
   assert.ok(r.status === 200)
 })
 
-test('netFetch enforces size cap', { timeout: 30_000 }, async () => {
+test('netFetch enforces size cap', { timeout: 30_000, skip: !PROXY_AVAILABLE }, async () => {
   const r = await netFetch('https://api.github.com/repos/deepseek-ai/deepseek-harness', {
-    proxy: 'http://127.0.0.1:7897',
+    proxy: PROXY,
     maxBytes: 500,
     timeoutMs: 15_000,
   })
@@ -58,7 +74,7 @@ test('netFetch enforces size cap', { timeout: 30_000 }, async () => {
 })
 
 test('proxyStatus reports an effective proxy', () => {
-  const s = proxyStatus({ HTTPS_PROXY: 'http://127.0.0.1:7897' })
-  assert.equal(s.effective, 'http://127.0.0.1:7897')
+  const s = proxyStatus({ HTTPS_PROXY: PROXY })
+  assert.equal(s.effective, PROXY)
   assert.ok(s.note.length > 0)
 })
