@@ -1,7 +1,7 @@
 # dsh-net-tools
 
-A DSH bundle that gives sandboxed agents **reliable outbound networking**
-through the user's local HTTP proxy.
+**Give DSH your magic**: plug sandboxed agents into your local HTTP proxy and
+fetch blocked sites, docs and APIs in one shot.
 
 [简体中文](README.md) · English
 
@@ -60,6 +60,10 @@ net_proxy_status(checkReachability: true)
   proxy reachable: true
   probe: [204] https://www.gstatic.com/generate_204 ok=true
 ```
+
+In action: the agent chaining `net_fetch` calls while thinking (screenshot):
+
+![net_fetch usage](assets/net_fetch-demo.png)
 
 ## Tests
 

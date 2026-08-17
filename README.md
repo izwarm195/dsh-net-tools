@@ -1,6 +1,6 @@
 # dsh-net-tools
 
-DSH 插件包：让沙箱（sandbox）中的 agent 通过本机 HTTP 代理获得**可靠的出站网络能力**。
+**让 DSH 使用你的魔法**：把沙箱里的 agent 接上你本地的 HTTP 代理，一条命令就能抓取被墙的网站、文档和 API。
 
 [English](README.en.md) · 简体中文
 
@@ -51,6 +51,10 @@ net_proxy_status(checkReachability: true)
   proxy reachable: true
   probe: [204] https://www.gstatic.com/generate_204 ok=true
 ```
+
+实际效果：agent 思考过程中连续调用 `net_fetch` 抓取网页（截图）：
+
+![net_fetch 使用示例](assets/net_fetch-demo.png)
 
 ## 测试
 
