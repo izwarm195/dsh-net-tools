@@ -1,7 +1,7 @@
 {
   "name": "dsh-net-tools",
   "version": "0.1.0",
-  "description": "DSH bundle that gives sandboxed agents reliable outbound networking through the user's local proxy: net_fetch (CONNECT-tunnel HTTP fetch) and net_proxy_status (proxy diagnostics).",
+  "description": "让DSH使用你的魔法：把沙箱里的 agent 接上你本地的 HTTP 代理，一条命令抓取被墙的网站、文档和 API（net_fetch 代理隧道抓取 + net_proxy_status 代理诊断）。Give DSH your magic: plug sandboxed agents into your local HTTP proxy and fetch blocked sites, docs and APIs in one shot (net_fetch + net_proxy_status).",
   "type": "module",
   "main": "./index.js",
   "exports": {

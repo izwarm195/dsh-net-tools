@@ -1,6 +1,6 @@
 # dsh-net-tools
 
-**让 DSH 使用你的魔法**：把沙箱里的 agent 接上你本地的 HTTP 代理，一条命令就能抓取被墙的网站、文档和 API。
+**让DSH使用你的魔法**：把沙箱里的 agent 接上你本地的 HTTP 代理，一条命令就能抓取被墙的网站、文档和 API。
 
 [English](README.en.md) · 简体中文
 
